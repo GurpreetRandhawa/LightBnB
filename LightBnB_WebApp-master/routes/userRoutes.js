@@ -6,19 +6,25 @@ const router = express.Router();
 
 // Create a new user
 router.post("/", (req, res) => {
-  const user = req.body;
-  user.password = bcrypt.hashSync(user.password, 12);
-
-  database
-    .addUser(user)
-    .then((user) => {
-      if (!user) {
-        return res.send({ error: "error" });
-      }
-      req.session.userId = user.id;
-      res.send("🤗");
-    })
-    .catch((e) => res.send(e));
+  const user1 = req.body;
+  user1.password = bcrypt.hashSync(user1.password, 12);
+  database.getUserWithEmail(user1.email).then((user) => {
+    if (user) {
+      console.log("Email already registered");
+      return res.send({ error: "Email already registered" });
+    } else {
+      database
+        .addUser(user1)
+        .then((user) => {
+          if (!user) {
+            return res.send({ error: "error" });
+          }
+          req.session.userId = user.id;
+          res.send("🤗");
+        })
+        .catch((e) => res.send(e));
+    }
+  });
 });
 
 // Log a user in

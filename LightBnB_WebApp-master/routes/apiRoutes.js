@@ -27,6 +27,7 @@ router.get("/reservations", (req, res) => {
       res.send(e);
     });
 });
+//This route inserts new proprty to the database and returns new property as json object
 
 router.post("/properties", (req, res) => {
   const userId = req.session.userId;
