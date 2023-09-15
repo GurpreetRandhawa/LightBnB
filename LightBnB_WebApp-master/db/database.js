@@ -1,5 +1,3 @@
-const properties = require("./json/properties.json");
-const users = require("./json/users.json");
 const { Pool } = require("pg");
 const pool = new Pool({
   user: "labber",
@@ -21,7 +19,7 @@ const getUserWithEmail = function (email) {
   return pool
     .query(queryString, values)
     .then((res) => {
-      if (res.rows.length != 0) {
+      if (res.rows.length !== 0) {
         return res.rows[0];
       }
       return null;
@@ -43,7 +41,7 @@ const getUserWithId = function (id) {
   return pool
     .query(queryString, values)
     .then((res) => {
-      if (res.rows.length != 0) {
+      if (res.rows.length !== 0) {
         return res.rows[0];
       }
       return null;
